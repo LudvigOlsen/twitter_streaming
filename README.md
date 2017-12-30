@@ -3,12 +3,12 @@
 A full setup for streaming tweets with tweepy, storing them in mongoDB and sending emails if a non-trivial error occurs. 
 
 # Features
-Search for keywords.
-Add tweets to mongoDB database.
-Send mails about non-trivial errors.
-Sleep for 15 minutes (optional) on non-trivial errors to avoid problems with Twitters rate-limit.
-Dump collection every n tweets collected and clear collection. Resumes collecting tweets automatically. Uses mongodump. (Not default behaviour)
-Filter out retweets.
+Search for keywords.  
+Add tweets to mongoDB database.  
+Send mails about non-trivial errors.  
+Sleep for 15 minutes (optional) on non-trivial errors to avoid problems with Twitters rate-limit.  
+Dump collection every n tweets collected and clear collection. Resumes collecting tweets automatically. Uses mongodump. (Not default behaviour)  
+Filter out retweets.  
 
 # Getting started
 
@@ -16,19 +16,21 @@ Filter out retweets.
 First make sure you have installed the dependencies:
 
 ### Dependencies
-python=>3.5
-python packages:
- - tweepy
- - pymongo
-mongoDB (only local install has been tested)
+python=>3.5  
+python packages:  
+ - tweepy  
+ - pymongo  
+mongoDB (only local install has been tested)  
 
 ### Installing python packages
-$ pip install tweepy pymongo
+$ pip install tweepy pymongo  
+
+Note: ‘$’ signals that the following should be typed into the terminal.  
 
 ### Installing mongoDB
 https://docs.mongodb.com/manual/administration/install-community/
 
-## Setting up connections
+## Preparing for streaming
 
 1. Make a copy of the file “fetcher_template.py” and give it a fitting name (e.g. “politics_fetcher.py” if you’re collecting tweets about politics).
 
@@ -36,10 +38,13 @@ https://docs.mongodb.com/manual/administration/install-community/
 
 3. Add your keywords and languages.
 
-4. Run the file in terminal, e.g.:
-$ python politics_fetcher.py
+4. Run the file in terminal, e.g.:  
+$ python politics_fetcher.py  
 
-5. Go to mongodb in a new terminal. Once in the right database, check db.stats() to see how many tweets have been collected so far.
+5. To see how many tweets have been collected, open a new terminal and type:
+$ mongo  
+$ use <database>  
+$ db.stats()  
 
 
 # Notes
