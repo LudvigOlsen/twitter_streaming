@@ -4,11 +4,13 @@ Runs the streamer.
 @author: Ludvig Olsen
 """
 
-import tweepy
-from http.client import IncompleteRead
 import re
 import time
-from email_me_error import email_me_error
+from http.client import IncompleteRead
+
+import tweepy
+
+from backend.email_me_error import email_me_error
 
 __all__ = ["run_streamer"]
 

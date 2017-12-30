@@ -4,7 +4,8 @@ Sends an error message via email.
 """
 
 import smtplib
-from error_messages import SPECIFIC_MSG
+
+from backend.error_messages import SPECIFIC_MSG
 
 __all__ = ["email_me_error"]
 

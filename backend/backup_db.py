@@ -4,10 +4,11 @@ Uses mongodump via subprocess. Sends email on error.
 
 """
 
-import os
 import datetime
+import os
 import subprocess
-from email_me_error import email_me_error
+
+from backend.email_me_error import email_me_error
 
 __all__ = ["call_backup"]
 

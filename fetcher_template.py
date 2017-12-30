@@ -1,10 +1,9 @@
 import tweepy
-from pymongo import MongoClient
 
-from stream_listener import StreamListener
-from twconnection import TWConnection
-from dbcconnection import DBCConnection
-from run_streamer import run_streamer
+from backend.dbcconnection import DBCConnection
+from backend.run_streamer import run_streamer
+from backend.stream_listener import StreamListener
+from backend.twconnection import TWConnection
 
 """
 Assumes you have mongodb installed locally
