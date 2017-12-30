@@ -50,8 +50,8 @@ $ <code>mongo</code>
 ### To see how many tweets have been collected, open a new terminal and type:  
 \> <code>db.stats()</code>  
 
-### To show the text fields of all the tweets with the pattern 'test':  
-\> <code>db.\<collection name\>.find({text:{$regex: 'test', $options:'i'}},{text:1})</code>  
+### To show the text fields of the first 10 tweets with the pattern 'test':  
+\> <code>db.\<collection name\>.find({text:{$regex: 'test', $options:'i'}},{text:1}).limit(10)</code>  
 
 ### To count the tweets with the pattern 'test’:  
 \> <code>db.\<collection name\>.find({text:{$regex: 'test', $options:'i'}}).count()</code>  
