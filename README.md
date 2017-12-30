@@ -44,8 +44,8 @@ $ python politics_fetcher.py
 
 ## Extras
 Open a new terminal and type:  
-$ mongo    
-$ use \<database name\>   
+<code>$ mongo</code>    
+<code>$ use \<database name\></code>   
 
 ### To see how many tweets have been collected, open a new terminal and type:  
 $ db.stats()  

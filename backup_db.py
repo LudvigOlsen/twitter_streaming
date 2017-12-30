@@ -12,7 +12,7 @@ from email_me_error import email_me_error
 __all__ = ["call_backup"]
 
 
-def _backup(hostname, port, db, rel_out_dir, username=None, password=None):
+def _backup(hostname, port, db, collection, rel_out_dir, username=None, password=None):
     now = datetime.datetime.now()
     output_dir = os.path.abspath(os.path.join(
         os.path.curdir,
@@ -40,6 +40,7 @@ def _backup(hostname, port, db, rel_out_dir, username=None, password=None):
                 '-u', '%s' % username,
                 '-p', '%s' % password,
                 '-d', '%s' % db,
+                '-c', '%s' % collection,
                 '-o', '%s' % output_dir
             ])
     elif username:
@@ -49,6 +50,7 @@ def _backup(hostname, port, db, rel_out_dir, username=None, password=None):
                 '--host', '%s' % hostname + ":" + port,
                 '-u', '%s' % username,
                 '-d', '%s' % db,
+                '-c', '%s' % collection,
                 '-o', '%s' % output_dir
             ])
     else:
@@ -57,6 +59,7 @@ def _backup(hostname, port, db, rel_out_dir, username=None, password=None):
                 'mongodump',
                 '--host', '%s' % hostname + ":" + port,
                 '-d', '%s' % db,
+                '-c', '%s' % collection,
                 '-o', '%s' % output_dir
             ])
 
@@ -65,8 +68,9 @@ def call_backup(db_connection, mail_connection=None):
     try:
         # Dump to disk
         _backup(db_connection.host, db_connection.port,
-                db_connection.db, db_connection.out_dir,
-                db_connection.username, db_connection.password)
+                db_connection.db, db_connection.collection,
+                db_connection.out_dir, db_connection.username,
+                db_connection.password)
         print("Successfully dumped to disk.")
     except AssertionError as e:
         print("Could not dump db!")
