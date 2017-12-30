@@ -30,7 +30,7 @@ Note: ‘$’ signals that the following should be typed into the terminal.
 ### Installing mongoDB
 https://docs.mongodb.com/manual/administration/install-community/
 
-## Preparing for streaming
+## Streaming
 
 1. Make a copy of the file “fetcher_template.py” and give it a fitting name (e.g. “politics_fetcher.py” if you’re collecting tweets about politics).
 
@@ -42,11 +42,33 @@ You will need to create a twitter application (very easy) at http://apps.twitter
 4. Run the file in terminal, e.g.:  
 $ python politics_fetcher.py  
 
-5. To see how many tweets have been collected, open a new terminal and type:  
-$ mongo  
-$ use <database>  
+## Extras
+Open a new terminal and type:  
+$ mongo    
+$ use <database name>   
+
+### To see how many tweets have been collected, open a new terminal and type:  
 $ db.stats()  
 
+### To show the text fields of all the tweets with the pattern 'test':  
+$ db.<collection name>.find({text:{$regex: 'test', $options:'i'}},{text:1})  
+
+### To count the tweets with the pattern 'test’:  
+$ db.<collection name>.find({text:{$regex: 'test', $options:'i'}}).count()  
+
+### To dump the database to disk (e.g. for backup):  
+In terminal (NOT within mongo shell), type:  
+$ mongodump --host <host>:<port> -d <database name> -c <collection name> -o <output directory path>  
+e.g.:  
+$ mongodump --host 127.0.0.1:27017 -d test_db -c test_collection -o out/    
+
+You might have to create the output directory first.
+
+### To export specific tweets to a csv file:  
+In terminal (NOT within mongo shell), type in one line:  
+$ mongoexport -h <host>:<port> -d <database name> -c <collection name> --type=csv --fields _id,created_at,id,text,source,user.id,user.name,user.screen_name,user.location,user.url,user.description,user.time_zone,user.lang,user.verified,user.created_at,user.followers_count,user.friends_count,user.statuses_count,user.favourites_count,retweeted,lang,timestamp_ms -q '{text:{$regex: "<search pattern>", $options:"i"}}' --out test_output.csv  
+
+These are the fields I usually include, but you can choose the fields you need.  
 
 # Notes
-I have currently only tested with ubuntu 17.10 and 17.04. It should work on other operating systems as well though. Otherwise, let me know.
+I have currently only tested with ubuntu 17.10 and 17.04. It should work on other operating systems as well though. Otherwise, let me know.  
