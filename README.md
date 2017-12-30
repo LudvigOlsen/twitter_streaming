@@ -3,14 +3,17 @@
 A full setup for streaming tweets with tweepy, storing them in mongoDB and sending emails if a non-trivial error occurs. 
 
 # Features
-Search for keywords.  
-Add tweets to mongoDB database.  
-Send mails about non-trivial errors.  
-Sleep for 15 minutes (optional) on non-trivial errors to avoid problems with Twitters rate-limit.  
-Dump collection every n tweets collected and clear collection. Resumes collecting tweets automatically. Uses mongodump. (Not default behaviour)  
-Filter out retweets.  
+- Search for keywords.  
+- Add tweets to mongoDB database.  
+- Send mails about non-trivial errors.  
+- Sleep for 15 minutes (optional) on non-trivial errors to avoid problems with Twitters rate-limit.  
+- Dump collection every n tweets collected and clear collection. Resumes collecting tweets automatically. Uses mongodump. (Not default behaviour)  
+- Filter out retweets.  
 
 # Getting started
+
+'$' signals that the following should be typed into the terminal.  
+'>' signals that the following should be typed in mongo shell.  
 
 ## Installation
 First make sure you have installed the dependencies:
@@ -23,9 +26,7 @@ python packages:
 mongoDB (only local install has been tested)  
 
 ### Installing python packages
-$ pip install tweepy pymongo  
-
-Note: ‘$’ signals that the following should be typed into the terminal.  
+$ <code>pip install tweepy pymongo</code>   
 
 ### Installing mongoDB
 https://docs.mongodb.com/manual/administration/install-community/
@@ -40,21 +41,21 @@ You will need to create a twitter application (very easy) at http://apps.twitter
 3. Add your keywords and languages.
 
 4. Run the file in terminal, e.g.:  
-$ python politics_fetcher.py  
+$ <code>python politics_fetcher.py</code>  
 
 ## Extras
 Open a new terminal and type:  
 $ <code>mongo</code>    
-$ <code>use \<database name\></code>   
+> <code>use \<database name\></code>   
 
 ### To see how many tweets have been collected, open a new terminal and type:  
-$ <code>db.stats()</code>  
+> <code>db.stats()</code>  
 
 ### To show the text fields of all the tweets with the pattern 'test':  
-$ <code>db.\<collection name\>.find({text:{$regex: 'test', $options:'i'}},{text:1})</code>  
+> <code>db.\<collection name\>.find({text:{$regex: 'test', $options:'i'}},{text:1})</code>  
 
 ### To count the tweets with the pattern 'test’:  
-$ <code>db.\<collection name\>.find({text:{$regex: 'test', $options:'i'}}).count()</code>  
+> <code>db.\<collection name\>.find({text:{$regex: 'test', $options:'i'}}).count()</code>  
 
 ### To dump the database to disk (e.g. for backup):  
 In terminal (NOT within mongo shell), type:  
