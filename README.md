@@ -45,20 +45,20 @@ $ python politics_fetcher.py
 ## Extras
 Open a new terminal and type:  
 $ mongo    
-$ use <database name>   
+$ use \<database name\>   
 
 ### To see how many tweets have been collected, open a new terminal and type:  
 $ db.stats()  
 
 ### To show the text fields of all the tweets with the pattern 'test':  
-$ db.<collection name>.find({text:{$regex: 'test', $options:'i'}},{text:1})  
+$ db.\<collection name\>.find({text:{$regex: 'test', $options:'i'}},{text:1})  
 
 ### To count the tweets with the pattern 'test’:  
-$ db.<collection name>.find({text:{$regex: 'test', $options:'i'}}).count()  
+$ db.\<collection name\>.find({text:{$regex: 'test', $options:'i'}}).count()  
 
 ### To dump the database to disk (e.g. for backup):  
 In terminal (NOT within mongo shell), type:  
-$ mongodump --host <host>:<port> -d <database name> -c <collection name> -o <output directory path>  
+$ mongodump --host \<host\>:\<port\> -d \<database name\> -c \<collection name\> -o \<output directory path\>  
 e.g.:  
 $ mongodump --host 127.0.0.1:27017 -d test_db -c test_collection -o out/    
 
@@ -66,7 +66,7 @@ You might have to create the output directory first.
 
 ### To export specific tweets to a csv file:  
 In terminal (NOT within mongo shell), type in one line:  
-$ mongoexport -h <host>:<port> -d <database name> -c <collection name> --type=csv --fields _id,created_at,id,text,source,user.id,user.name,user.screen_name,user.location,user.url,user.description,user.time_zone,user.lang,user.verified,user.created_at,user.followers_count,user.friends_count,user.statuses_count,user.favourites_count,retweeted,lang,timestamp_ms -q '{text:{$regex: "<search pattern>", $options:"i"}}' --out test_output.csv  
+$ mongoexport -h \<host\>:\<port\> -d \<database name\> -c \<collection name\> --type=csv --fields _id,created_at,id,text,source,user.id,user.name,user.screen_name,user.location,user.url,user.description,user.time_zone,user.lang,user.verified,user.created_at,user.followers_count,user.friends_count,user.statuses_count,user.favourites_count,retweeted,lang,timestamp_ms -q '{text:{$regex: "\<search pattern\>", $options:"i"}}' --out test_output.csv  
 
 These are the fields I usually include, but you can choose the fields you need.  
 
