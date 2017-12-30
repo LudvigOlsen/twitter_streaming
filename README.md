@@ -34,14 +34,15 @@ https://docs.mongodb.com/manual/administration/install-community/
 
 1. Make a copy of the file “fetcher_template.py” and give it a fitting name (e.g. “politics_fetcher.py” if you’re collecting tweets about politics).
 
-2. Fill out the details in the new file for connecting to your database, twitter application, and gmail. I recommend creating a new twitter account and a new gmail account specifically for collecting tweets. 
+2. Fill out the details in the new file for connecting to your database, twitter application, and gmail. I recommend creating a new twitter account and a new gmail account specifically for collecting tweets.  
+You will need to create a twitter application (very easy) at http://apps.twitter.com/ to obtain the needed keys for connecting to the API.  
 
 3. Add your keywords and languages.
 
 4. Run the file in terminal, e.g.:  
 $ python politics_fetcher.py  
 
-5. To see how many tweets have been collected, open a new terminal and type:
+5. To see how many tweets have been collected, open a new terminal and type:  
 $ mongo  
 $ use <database>  
 $ db.stats()  
