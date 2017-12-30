@@ -11,7 +11,7 @@ __all__ = ["StreamListener"]
 class StreamListener(tweepy.StreamListener):
     # For accessing the Twitter Streaming API.
 
-    def __init__(self, api=None, db_connection=None, mongo_host=None, mail_connection=None):
+    def __init__(self, api=None, db_connection=None, mongo_host=None, mail_connection=None, collect_retweets=False):
         super(StreamListener, self).__init__(api=api)
 
         if not db_connection:
@@ -22,10 +22,13 @@ class StreamListener(tweepy.StreamListener):
             raise ValueError("mongo_host should be a string.")
         if not isinstance(mongo_host, str):
             raise ValueError("mongo_host should be a string.")
+        if not isinstance(collect_retweets, bool):
+            raise ValueError("collect_retweets should be a bool.")
 
         self.db_connection = db_connection
         self.max_count = self.db_connection.max_count
         self.mail_connection = mail_connection
+        self.collect_retweets = collect_retweets
 
         self.client = MongoClient(mongo_host)
         self.db = self.client[self.db_connection.db]
@@ -70,21 +73,27 @@ class StreamListener(tweepy.StreamListener):
             # Decode the JSON from Twitter
             datajson = json.loads(data)
 
-            if not "RT" in datajson['text'][0:2]:
-                # grab the 'created_at' data from the Tweet to use for display
-                created_at = datajson['created_at']
-
-                # print out a message to the screen that we have collected a tweet
-                print("Tweet collected at " + str(created_at))
-
-                # insert the data into the mongoDB into a collection called twitter_search
-                # if twitter_search doesn't exist, it will be created.
-                self.db[self.collection_name].insert(datajson)
-
-                if self.max_count:
-                    # Add to tweets counter
-                    self.num_tweets += 1
+            # If we don't want to collect retweets
+            if not self.collect_retweets:
+                if "RT" not in datajson['text'][0:2]:
+                    self.add_to_collection(datajson=datajson)
+                else:
+                    print("Skipped retweet!")
             else:
-                print("Skipped retweet!")
+                self.add_to_collection(datajson=datajson)
         except Exception as e:
             print(e)
+
+    def add_to_collection(self, datajson):
+        created_at = datajson['created_at']
+
+        # print out a message to the screen that we have collected a tweet
+        print("Tweet collected at " + str(created_at))
+
+        # insert the data into the mongoDB into a collection called twitter_search
+        # if twitter_search doesn't exist, it will be created.
+        self.db[self.collection_name].insert(datajson)
+
+        if self.max_count:
+            # Add to tweets counter
+            self.num_tweets += 1

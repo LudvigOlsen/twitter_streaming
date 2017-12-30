@@ -65,9 +65,11 @@ WORDS = [u"snack", u"humus", u"bitcoin"]
 LANGUAGES = ["en"]
 
 if __name__ == '__main__':
-    # Set up the listener. The 'wait_on_rate_limit=True' is needed to help with Twitter API rate limiting.
+    # Set up the listener:
+    # The 'wait_on_rate_limit=True' is needed to help with Twitter API rate limiting.
+    # collect_retweets specifies whether to collect retweets or not.
     listener = StreamListener(api=tweepy.API(wait_on_rate_limit=True), db_connection=db_connection,
-                              mongo_host=MONGO_HOST, mail_connection=mail_connection)
+                              mongo_host=MONGO_HOST, mail_connection=mail_connection, collect_retweets=False)
 
     run_streamer(tw_connection=tw_connection, listener=listener, WORDS=WORDS, LANGUAGES=LANGUAGES,
                  sleep_time=15, mail_connection=mail_connection)
