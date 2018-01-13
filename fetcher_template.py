@@ -64,11 +64,21 @@ WORDS = [u"snack", u"humus", u"bitcoin"]
 LANGUAGES = ["en"]
 
 if __name__ == '__main__':
-    # Set up the listener:
-    # The 'wait_on_rate_limit=True' is needed to help with Twitter API rate limiting.
-    # collect_retweets specifies whether to collect retweets or not.
+    """
+    Set up the listener:
+    The 'wait_on_rate_limit=True' is needed to help with Twitter API rate limiting.
+    collect_retweets specifies whether to collect retweets or not.
+    """
     listener = StreamListener(api=tweepy.API(wait_on_rate_limit=True), db_connection=db_connection,
                               mongo_host=MONGO_HOST, mail_connection=mail_connection, collect_retweets=False)
 
+    """
+    Start streaming.
+    error_sleep_time is the time to sleep when an unknown error occurs (minutes).
+    sleep_every is the number of hours to stream before taking a break.
+    sleep_for is the number of hours to sleep, when taking a break. 
+    sleep_every and sleep_for details allows to sample the tweets over long time durations. E.g. sleep every 24 hours,
+    and sleep for 48 hours, allows you to only stream every 3rd day without manually having to start and stop the stream.
+    """
     run_streamer(tw_connection=tw_connection, listener=listener, WORDS=WORDS, LANGUAGES=LANGUAGES,
                  error_sleep_time=15, mail_connection=mail_connection, sleep_every=None, sleep_for=None)
