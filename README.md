@@ -9,7 +9,7 @@ A full setup for streaming tweets with tweepy, storing them in mongoDB and sendi
 - Sleep for 15 minutes (optional) on non-trivial errors to avoid problems with Twitters rate-limit.  
 - Dump collection every n tweets collected and clear collection. Resumes collecting tweets automatically. Uses mongodump. (Not default behaviour)  
 - Filter out retweets.  
-- Sample streaming - i.e stream for n hours at a time, then sleep for n~2~ hours and resume.   
+- Sample streaming - i.e stream for n hours at a time, then sleep for n<sub>2</sub> hours and resume.   
 
 # Getting started
 
