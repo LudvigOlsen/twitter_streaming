@@ -71,4 +71,4 @@ if __name__ == '__main__':
                               mongo_host=MONGO_HOST, mail_connection=mail_connection, collect_retweets=False)
 
     run_streamer(tw_connection=tw_connection, listener=listener, WORDS=WORDS, LANGUAGES=LANGUAGES,
-                 sleep_time=15, mail_connection=mail_connection)
+                 error_sleep_time=15, mail_connection=mail_connection, sleep_every=None, sleep_for=None)
