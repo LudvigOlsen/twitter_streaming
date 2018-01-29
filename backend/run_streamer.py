@@ -83,25 +83,33 @@ def run_streamer(tw_connection, listener, WORDS, LANGUAGES, error_sleep_time=15,
                     e_ = "\r\n".join(
                         [str(e), "Will sleep {} minutes and try to continue afterwards".format(error_sleep_time)])
                     if mail_connection:
-                        email_me_error(mail_connection=mail_connection, status_code="unknown", custom_msg=e_)
+                        error_mail_wrapper(mail_connection=mail_connection, status_code="unknown", 
+                                           custom_msg=e_, streamer=streamer, sleep_time=error_sleep_time)
                     else:
                         print(e_)
-                    streamer.disconnect()
+                    try:
+                        streamer.disconnect()
+                    except:
+                        pass
                     time.sleep(error_sleep_time)
                     continue
                 except:
                     e_ = "\r\n".join([str(e), "Failed to continue. Please take action."])
                     if mail_connection:
-                        email_me_error(mail_connection=mail_connection, status_code="unknown", custom_msg=e_)
+                        error_mail_wrapper(mail_connection=mail_connection, status_code="unknown", 
+                                           custom_msg=e_, streamer=streamer, sleep_time=error_sleep_time)
                     else:
                         print(e_)
-                    streamer.disconnect()
+                    try:
+                        streamer.disconnect()
+                    except:
+                        pass
                     print(str(e))
                     break
 
 
 def sleep_if(streamer, t1, sleep_every, sleep_for):
-    if (time.time() - t1) // (60 * 60) > 60 * 60 * sleep_every:
+    if int((time.time() - t1) / (60 * 60)) > int(60 * 60 * sleep_every):
         try:
             streamer.disconnect()
         except:
@@ -109,3 +117,17 @@ def sleep_if(streamer, t1, sleep_every, sleep_for):
         print("Will sleep for {} hours".format(sleep_for))
         time.sleep(60 * 60 * sleep_for)
         return time.time()
+
+def error_mail_wrapper(mail_connection, status_code, custom_message, streamer, sleep_time):
+    while True:
+        # Until email is sent, disconnect, sleep, attempt again
+        try:
+            email_me_error(mail_connection, status_code, custom_msg)
+            return False
+        except:
+            try:
+                streamer.disconnect()
+            except:
+                pass
+            print("Could not send email")
+            time.sleep(sleep_time)
